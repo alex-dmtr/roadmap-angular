@@ -1,17 +1,7 @@
 import { Component } from '@angular/core';
 
-class User {
-  id?: Number
-  username: String
-}
-class Group {
-  id?: Number
-  name: String
-  description: String
-  avatarUrl: String
-  owner: User
-  members?: User[]
-}
+import { Group } from './group';
+
 @Component({
   selector: 'app',
   templateUrl: './app.template.html'
