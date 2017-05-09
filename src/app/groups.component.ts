@@ -17,7 +17,10 @@ export class GroupsComponent implements OnInit {
     this.getGroups();
   }
 
-  getGroups(): void {
-    this.groups = this.groupService.getGroups();
+  getGroups(): Promise<void> {
+    return this.groupService.getGroups().then((groups) => {
+      console.log(groups);
+      this.groups = groups;
+    });
   }
 }
