@@ -17,24 +17,22 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        <div *ngIf="user; else elseBlock">
-          <li>
-            <a href=# id='profile-button'>
-              <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-            </a>
-          </li>
-          <li>
-            <a href=# id='logout-button'>
+        <li *ngIf="user.isAuth">
+          <a href=# id='profile-button'>
+            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{user.username}}
+          </a>
+        </li>
+        <li *ngIf="user.isAuth">
+          <a href=# id='logout-button'>
                   Logout
                 </a>
-          </li>
-        </div>
-        <ng-template #elseBlock>
-          <li><a routerLink="/login" routerLinkActive="active">Sign in</a></li>
-          <li><a routerLink="/register" routerLinkActive="active">Sign up</a></li>
-        </ng-template>
+        </li>
+        <li *ngIf="!user.isAuth"><a routerLink="/login" routerLinkActive="active">Sign in</a></li>
+        <li *ngIf="!user.isAuth"><a routerLink="/register" routerLinkActive="active">Sign up</a></li>
+
+
+
       </ul>
     </div>
-
   </div>
 </nav>

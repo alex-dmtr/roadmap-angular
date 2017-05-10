@@ -1,10 +1,10 @@
 import { User } from './user';
 
 export class Group {
-  id?: Number
-  name: String
-  description: String
-  avatarUrl: String
+  id?: number
+  name: string
+  description: string
+  avatarUrl: string
   owner: User
   members?: User[]
 };

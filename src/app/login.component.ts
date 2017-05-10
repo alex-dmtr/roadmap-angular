@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
+// import { FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
+import { AuthService } from './auth.service';
+
+declare var $: JQueryStatic;
 
 @Component({
   selector: 'app-login',
@@ -15,9 +19,35 @@ import { Component } from '@angular/core';
     <div class="text-danger" id="validation-error">
 
     </div>
-    <input type="submit" class="btn btn-success" id='login-button' value='Sign in'>
-  </form>`
+    <input type="submit" class="btn btn-success" id='login-button' value='Sign in' (click)="doLogin($event)">
+  </form>`,
 })
 export class LoginComponent {
+  // constructor(private formBuilder: FormBuilder) {
 
+  // }
+
+  constructor(private authService: AuthService) {
+
+  }
+  // public loginForm = this.formBuilder.group({
+  //   username: ["", Validators.required],
+  //   password: ["", Validators.required]
+  // });
+
+  doLogin(event: any) {
+    event.preventDefault();
+
+    let user = {
+      username: $("#username").val(),
+      password: $("#password").val()
+    };
+
+    this.authService.doLogin(user.username, user.password)
+      .then(user => {
+      });
+
+
+    // console.log(this.loginForm.value);
+  }
 }
