@@ -23,12 +23,12 @@
           </a>
         </li>
         <li *ngIf="user.isAuth">
-          <a href=# id='logout-button'>
+          <a href="javascript:;" id="logout-button" (click)="$event.preventDefault(); authService.doLogout(); ">
                   Logout
                 </a>
         </li>
-        <li *ngIf="!user.isAuth"><a routerLink="/login" routerLinkActive="active">Sign in</a></li>
-        <li *ngIf="!user.isAuth"><a routerLink="/register" routerLinkActive="active">Sign up</a></li>
+        <li *ngIf="!user.isAuth "><a routerLink="/login" routerLinkActive="active ">Sign in</a></li>
+        <li *ngIf="!user.isAuth "><a routerLink="/register" routerLinkActive="active ">Sign up</a></li>
 
 
 

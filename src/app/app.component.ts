@@ -12,6 +12,10 @@ export class AppComponent {
 
   constructor(private authService: AuthService) {
     this.user = authService.user;
+
+    authService.user$.subscribe(user => {
+      console.log(user);
+    });
   }
 
 

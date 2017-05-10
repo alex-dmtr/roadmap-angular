@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Headers, Http } from '@angular/http';
-
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
 
 const UID = 'local.user.angular';
@@ -35,11 +35,29 @@ export class LocalUser {
 @Injectable()
 export class AuthService {
   user: LocalUser = new LocalUser();
+
+  /**
+   * LocalUser observable stream. Will update on login/logout.
+   * 
+   */
+  user$: Observable<LocalUser>;
+  private handlers: any[] = [];
   private loginUrl = `http://localhost:3000/api/auth`;
 
+  private notifyHandlers() {
+    this.handlers.forEach((subscriber: any) => {
+      subscriber.next(this.user);
+    });
+  }
   constructor(private http: Http) {
+
     this.user.fetch();
-    console.log('start AuthService');
+
+    this.user$ = new Observable<LocalUser>((subscriber: any) => {
+      this.handlers.push(subscriber);
+      subscriber.next(this.user);
+    });
+
   }
 
   public isAuthenticated(): boolean {
@@ -66,6 +84,8 @@ export class AuthService {
 
           this.user.save();
 
+          this.notifyHandlers();
+
           return Promise.resolve(this.user);
         });
     });
@@ -73,5 +93,9 @@ export class AuthService {
 
   public doLogout() {
     this.user.destroy();
+
+    this.notifyHandlers();
   }
 }
+
+
