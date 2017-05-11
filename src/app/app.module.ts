@@ -7,6 +7,7 @@ import { AppRoutingModule, RoutedComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthService } from './auth.service';
 import { AuthHttpService } from './auth.http.service';
+import { FlashService } from './flash.service';
 // import { NavComponent } from './nav.component';
 // import { LoginComponent } from './login.component';
 // import { RegisterComponent } from './register.component';
@@ -14,7 +15,7 @@ import { AuthHttpService } from './auth.http.service';
 // import { GroupsComponent } from './groups.component';
 
 @NgModule({
-  providers: [AuthService, AuthHttpService],
+  providers: [AuthService, AuthHttpService, FlashService],
   imports: [BrowserModule, HttpModule, AppRoutingModule],
   declarations: [AppComponent, RoutedComponents],
   bootstrap: [AppComponent]
