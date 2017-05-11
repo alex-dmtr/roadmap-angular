@@ -8,7 +8,9 @@ import { AppComponent } from './app.component';
 import { AuthService } from './auth.service';
 import { AuthHttpService } from './auth.http.service';
 import { FlashService } from './flash.service';
-// import { NavComponent } from './nav.component';
+import { FlashComponent } from './flash.component';
+
+import { NavComponent } from './nav.component';
 // import { LoginComponent } from './login.component';
 // import { RegisterComponent } from './register.component';
 // import { HomeComponent } from './home.component';
@@ -17,7 +19,7 @@ import { FlashService } from './flash.service';
 @NgModule({
   providers: [AuthService, AuthHttpService, FlashService],
   imports: [BrowserModule, HttpModule, AppRoutingModule],
-  declarations: [AppComponent, RoutedComponents],
+  declarations: [AppComponent, NavComponent, FlashComponent, RoutedComponents],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

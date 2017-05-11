@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Group } from './group';
-// import { Headers, Http } from '@angular/http';
+import { Headers, Http } from '@angular/http';
 import { AuthHttpService } from './auth.http.service';
 import 'rxjs/add/operator/toPromise';
 

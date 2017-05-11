@@ -38,11 +38,11 @@ export class FlashService {
   private handlers: any[] = [];
 
   public items: Array<Flash> = [];
-  public items$: Observable<Array<Flash>>;
+  public newItem$: Observable<Flash>;
 
   constructor() {
 
-    this.items$ = new Observable<Array<Flash>>((subscriber: any) => {
+    this.newItem$ = new Observable<Flash>((subscriber: any) => {
       this.handlers.push(subscriber);
     })
   }
@@ -52,7 +52,9 @@ export class FlashService {
 
     this.items.push(newFlash);
 
-    this.notifyHandlers();
+    this.handlers.forEach((subscriber: any) => {
+      subscriber.next(newFlash);
+    });
   }
 
   public remove(flashID: number) {
@@ -61,14 +63,8 @@ export class FlashService {
         return item;
     });
 
-    this.notifyHandlers();
   }
 
-  private notifyHandlers() {
-    this.handlers.forEach((subscriber: any) => {
-      subscriber.next(this.items);
-    });
-  }
 
 
 }
