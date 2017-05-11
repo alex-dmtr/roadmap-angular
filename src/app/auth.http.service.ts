@@ -24,4 +24,41 @@ export class AuthHttpService {
 
     return this.http.get(url, _options);
   }
+
+  post(url: string, body: any, options?: ResponseOptionsArgs): Observable<Response> {
+    let _options = this.appendHeaders(options);
+
+    return this.http.post(url, body, _options);
+  }
+
+  delete(url: string, options?: ResponseOptionsArgs): Observable<Response> {
+    let _options = this.appendHeaders(options);
+
+    return this.http.delete(url, _options);
+  }
+
+  put(url: string, body: any, options?: ResponseOptionsArgs): Observable<Response> {
+    let _options = this.appendHeaders(options);
+
+    return this.http.put(url, body, _options);
+  }
+
+  patch(url: string, body: any, options?: ResponseOptionsArgs): Observable<Response> {
+    let _options = this.appendHeaders(options);
+
+    return this.http.patch(url, body, _options);
+  }
+
+  head(url: string, options?: ResponseOptionsArgs): Observable<Response> {
+    let _options = this.appendHeaders(options);
+
+    return this.http.head(url, _options);
+  }
+
+  options(url: string, options?: ResponseOptionsArgs): Observable<Response> {
+    let _options = this.appendHeaders(options);
+
+    return this.http.options(url, _options);
+  }
+
 }
