@@ -109,3 +109,7 @@ h3 {
   display: none;
   text-align: center;
 }
+
+.nav li>a {
+  line-height: 30px;
+}
