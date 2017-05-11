@@ -37,7 +37,7 @@ export class FlashService {
   private flashFactory = new FlashFactory();
   private handlers: any[] = [];
 
-  public items: Array<Flash>;
+  public items: Array<Flash> = [];
   public items$: Observable<Array<Flash>>;
 
   constructor() {
