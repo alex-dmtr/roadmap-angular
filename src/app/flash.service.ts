@@ -13,6 +13,14 @@ export class Flash {
   constructor(public type: FlashType, public message: string) {
 
   }
+
+  public isInfo(): boolean {
+    return this.type === FlashType.Info;
+  }
+
+  public isError(): boolean {
+    return this.type === FlashType.Error;
+  }
 }
 
 class FlashFactory {

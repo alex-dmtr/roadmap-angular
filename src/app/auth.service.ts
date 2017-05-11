@@ -71,24 +71,22 @@ export class AuthService {
   }
 
   public doLogin(username: string, password: string): Promise<LocalUser> {
-    return new Promise((resolve, reject) => {
-      this.http.post(this.loginUrl, { username, password })
-        .toPromise().then(response => {
-          var data = response.json();
+    return this.http.post(this.loginUrl, { username, password })
+      .toPromise().then(response => {
+        var data = response.json();
 
 
-          this.user.isAuth = true;
-          this.user.username = data.user.username;
-          this.user.id = data.user.id;
-          this.user.jwt = data.jwt;
+        this.user.isAuth = true;
+        this.user.username = data.user.username;
+        this.user.id = data.user.id;
+        this.user.jwt = data.jwt;
 
-          this.user.save();
+        this.user.save();
 
-          this.notifyHandlers();
+        this.notifyHandlers();
 
-          return Promise.resolve(this.user);
-        });
-    });
+        return Promise.resolve(this.user);
+      });
   }
 
   public doLogout() {

@@ -3,7 +3,11 @@ import { FlashService, FlashType, Flash } from './flash.service';
 
 @Component({
   selector: 'app-flash',
-  template: `<p *ngFor="let flash of tempItems">{{flash.message}}</p>`
+  template: `<div *ngFor="let flash of tempItems" class="alert" [class.alert-info]="flash.isInfo()"
+  [class.alert-danger]="flash.isError()">
+  {{flash.message}}
+  
+  </div>`
 })
 export class FlashComponent implements OnInit {
 

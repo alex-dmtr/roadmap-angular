@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'
 // import { FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
 import { AuthService } from './auth.service';
+import { FlashService, FlashType } from './flash.service';
 
 declare var $: JQueryStatic;
 
@@ -27,7 +28,7 @@ export class LoginComponent {
 
   // }
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private flashService: FlashService) {
 
   }
   // public loginForm = this.formBuilder.group({
@@ -43,9 +44,11 @@ export class LoginComponent {
       password: $("#password").val()
     };
 
+    console.log("do login man!");
     this.authService.doLogin(user.username, user.password)
-      .then(user => {
-      });
+      .catch(err => {
+        this.flashService.push(FlashType.Error, "Username and password combination not recognised");
+      })
 
 
     // console.log(this.loginForm.value);

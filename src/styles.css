@@ -113,3 +113,9 @@ h3 {
 .nav li>a {
   line-height: 30px;
 }
+
+.alert {
+  max-width: 600px;
+  /*margin: 0 auto;*/
+  /*padding: 0;*/
+}
