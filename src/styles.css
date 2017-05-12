@@ -81,7 +81,7 @@ h1 {
 #register-form {
   margin: auto;
   /*width: 50%;*/
-  max-width: 900px;
+  /*max-width: 900px;*/
   padding: 10px;
 }
 
@@ -118,4 +118,12 @@ h3 {
   max-width: 600px;
   /*margin: 0 auto;*/
   /*padding: 0;*/
+}
+
+strong {
+  color: darkred;
+}
+
+hr.style1 {
+  border-top: 1px solid #8c8b8b;
 }

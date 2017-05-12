@@ -1,14 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FlashService, FlashType, Flash } from './flash.service';
 
+declare var $: JQueryStatic;
+
 @Component({
   selector: 'app-flash',
-  template: `<div *ngFor="let flash of tempItems" class="alert" [class.alert-info]="flash.isInfo()"
-  [class.alert-danger]="flash.isError()">
+  template: `<div style="float:right"><div *ngFor="let flash of tempItems" class="alert" [class.alert-info]="flash.isInfo()"
+  [class.alert-danger]="flash.isError()"  id="flash{{flash.id}}">
   {{flash.message}}
   
+  </div>
   </div>`
 })
+
 export class FlashComponent implements OnInit {
 
   items: Flash[] = [];
@@ -26,7 +30,7 @@ export class FlashComponent implements OnInit {
         });
 
         flashService.remove(newItem.id);
-      }, 5000);
+      }, 10000);
     })
 
   }

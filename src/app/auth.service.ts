@@ -37,6 +37,10 @@ export class AuthService {
   user: LocalUser = new LocalUser();
 
   /**
+   * URL to redirect after login.
+   */
+  public redirectUrl: string;
+  /**
    * LocalUser observable stream. Will update on login/logout.
    * 
    */
