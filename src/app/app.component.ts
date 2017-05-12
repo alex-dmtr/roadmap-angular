@@ -21,9 +21,12 @@ export class AppComponent {
 
     authService.user$.subscribe(user => {
       if (user.isAuth && !this.loggedIn) {
-
         this.router.navigate(["groups"]);
         this.flashService.push(FlashType.Info, `Welcome back, ${user.username}`);
+      }
+      else if (!user.isAuth && this.loggedIn) {
+        this.router.navigate(["home"]);
+        this.flashService.push(FlashType.Info, `Logged out succesfully`);
       }
 
       this.loggedIn = user.isAuth;
