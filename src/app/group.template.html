@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-xs-6">
+    <!--<button class="btn btn-default" style="float:right" id="leave-group">Leave group</button>
+
+    <button class="btn btn-default" style="float:right" data-toggle="modal" data-target="#editGroupModal">Edit group</button>-->
+    <h1>{{group.name}} </h1>
+    <p>{{group.description}}</p>
+    <p>Group owner: <strong>{{group.owner.username}}</strong>
+      <p>Members:</p>
+      <ul>
+        <li *ngFor="let member of group.members"><span>{{member.username}}</span>
+
+        </li>
+
+
+      </ul>
+
+      <h3>Posts</h3>
+      <ul class="posts">
+
+        <li *ngFor="let post of group.posts" class="post" id="post{{post.id}}">
+
+          <a href="javascript:;" class="edit-post"><span class="glyphicon glyphicon-pencil" style="float:right"></span></a>
+
+          <strong>{{post.owner.username}}</strong>
+          <div class="post-view">
+
+            <p>{{post.message}}</p>
+          </div>
+          <div class="post-edit" style="display:none">
+            <textarea class="form-control post-message" rows="2" cols="10">{{post.message}}</textarea>
+            <button class="btn btn-primary save-post">Save changes</button>
+            <button class="btn cancel-post">Cancel</button>
+            <button class="btn btn-danger delete-post" style="float:right">Delete post</button>
+          </div>
+        </li>
+
+      </ul>
+
+      <textarea class="form-control" rows="2" cols="10" id="post-message" placeholder="Write a post here"></textarea>
+      <button class=" btn btn-primary " id='add-post' style="margin-top:10px">Add post</button>
+  </div>
+  <div class="col-xs-6 ">
+    <img src='{{group.avatarUrl}} ' class="img img-responsive img-thumbnail ">
+  </div>
+</div>

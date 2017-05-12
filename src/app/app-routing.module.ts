@@ -4,6 +4,7 @@ import { LoginComponent } from './login.component';
 import { RegisterComponent } from './register.component';
 import { HomeComponent } from './home.component';
 import { GroupsComponent } from './groups.component';
+import { GroupComponent } from './group.component';
 import { NavComponent } from './nav.component';
 import { AuthGuard } from './auth-guard.service';
 
@@ -12,7 +13,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'groups', component: GroupsComponent, canActivate: [AuthGuard] }
+  { path: 'groups', component: GroupsComponent, canActivate: [AuthGuard] },
+  { path: 'groups/:id', component: GroupComponent, canActivate: [AuthGuard] }
   // { path: 'detail/:id', component: HeroDetailComponent },
   // { path: 'heroes',     component: HeroesComponent }
 ];
@@ -22,4 +24,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-export const RoutedComponents = [LoginComponent, RegisterComponent, HomeComponent, GroupsComponent];
+export const RoutedComponents = [LoginComponent, RegisterComponent, HomeComponent, GroupsComponent, GroupComponent];

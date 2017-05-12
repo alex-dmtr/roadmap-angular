@@ -1,4 +1,5 @@
 export class User {
   id?: Number
-  username: String
+  username: String = "new user";
+
 }

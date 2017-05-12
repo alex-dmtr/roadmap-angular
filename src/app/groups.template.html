@@ -20,7 +20,7 @@
 
         <div class="col-xs-8">
           <h2 *ngIf="group.is_member">
-            <a href="/groups/{{this.id}}">{{group.name}}</a> </h2>
+            <a routerLink="{{group.id}}">{{group.name}}</a> </h2>
 
           <h2 *ngIf="!group.is_member">{{group.name}}</h2>
 
