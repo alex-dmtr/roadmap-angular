@@ -18,7 +18,7 @@
 
       <ul class="nav navbar-nav navbar-right">
         <li *ngIf="user.isAuth">
-          <a href=# id='profile-button'>
+          <a routerLink="/profile" id='profile-button'>
             <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{user.username}}
           </a>
         </li>
