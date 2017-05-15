@@ -35,4 +35,9 @@ export class GroupService {
     return this.http.put(apiUrls.joinGroup(groupID, userID), {})
       .toPromise().then(response => response.json());
   }
+
+  public deleteGroup(groupID: number): Promise<any> {
+    return this.http.delete(apiUrls.groupById(groupID))
+      .toPromise().then(response => response.json());
+  }
 }

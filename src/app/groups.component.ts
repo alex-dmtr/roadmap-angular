@@ -41,7 +41,7 @@ export class GroupsComponent implements OnInit {
     this.groupService.createGroup(group)
       .then(response => {
         this.flashService.push(FlashType.Info, "Group created succesfully");
-        $("#createGroupModal").modal('hide');
+        ($("#createGroupModal") as any).modal('hide');
         return this.getGroups();
       })
       .catch(err => {

@@ -50,7 +50,7 @@ export class GroupComponent implements OnInit {
   }
 
 
-  saveGroup($event: any) {
+  public saveGroup($event: any) {
     $event.preventDefault();
 
     let group = new Group();
@@ -64,11 +64,25 @@ export class GroupComponent implements OnInit {
     this.groupService.updateGroup(group)
       .then(response => {
         this.flashService.push(FlashType.Info, "Group update succesful");
-        $("#editGroupModal").modal('hide');
+        ($("#editGroupModal") as any).modal('hide');
         return this.getGroup();
       })
       .catch(err => {
         this.flashService.push(FlashType.Error, "Error updating group");
+        console.error(err);
+      })
+  }
+
+  public deleteGroup($event: any) {
+    $event.preventDefault();
+
+    this.groupService.deleteGroup(this.group.id)
+      .then(response => {
+        this.flashService.push(FlashType.Info, "Group deleted");
+        this.router.navigate(["groups"]);
+      })
+      .catch(err => {
+        this.flashService.push(FlashType.Error, "Group deletion failed");
         console.error(err);
       })
   }
