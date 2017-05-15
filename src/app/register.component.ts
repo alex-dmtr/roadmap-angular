@@ -1,29 +1,45 @@
 import { Component } from '@angular/core';
+import { FlashService, FlashType } from './flash.service';
+import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
+
+declare var $: JQueryStatic;
 
 @Component({
   selector: 'app-login',
-  template: `<form role="form" id="login-form">
-    <h2>Create an account</h2>
-    <p>Create an account to view and access our groups.</p>
-    <p>We're a happy, growing community! :)</p>
-      <div class="form-group">
-        <input type="text" id="username" placeholder="Username" class="form-control">
-      </div>
-      <div class="form-group">
-        <input type="email" id="email" placeholder="Email address" class="form-control">
-      </div>
-      <div class="form-group">
-        <input type="password" id="password"placeholder="Password" class="form-control">
-      </div>
-      <div class="form-group">
-        <input type="password" id="password2" placeholder="Enter your password again" class="form-control">
-      </div>
-      <div class="text-danger" id="validation-error">
-
-      </div>
-          <input type="submit" class="btn btn-success" id='register-button' value='Create account'>
-    </form>`
+  templateUrl: './register.template.html'
 })
 export class RegisterComponent {
+  constructor(
+    private flashService: FlashService,
+    private authService: AuthService,
+    private router: Router) {
 
+  }
+  doRegister($event: any) {
+    $event.preventDefault();
+
+    let body = {
+      username: $("#username").val(),
+      email: $("#email").val(),
+      password: $("#password").val()
+    }
+
+    let password2 = $("#password2").val();
+
+    if (body.password != password2)
+      return this.flashService.push(FlashType.Error, "Passwords do not match");
+
+    this.authService.doRegister(body.username, body.email, body.password)
+      .then(() => {
+        this.flashService.push(FlashType.Info, "Register succesful");
+        return this.authService.doLogin(body.username, body.password);
+      })
+      .then(() => {
+        this.router.navigate(["profile"]);
+      })
+      .catch(err => {
+        this.flashService.push(FlashType.Error, "There was an error registering your account");
+      })
+  }
 }

@@ -1,6 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { apiUrls } from './config';
 import 'rxjs/add/operator/toPromise';
 
 const UID = 'local.user.angular';
@@ -46,7 +47,6 @@ export class AuthService {
    */
   user$: Observable<LocalUser>;
   private handlers: any[] = [];
-  private loginUrl = `http://localhost:3000/api/auth`;
 
   private notifyHandlers() {
     this.handlers.forEach((subscriber: any) => {
@@ -75,7 +75,7 @@ export class AuthService {
   }
 
   public doLogin(username: string, password: string): Promise<LocalUser> {
-    return this.http.post(this.loginUrl, { username, password })
+    return this.http.post(apiUrls.login(), { username, password })
       .toPromise().then(response => {
         var data = response.json();
 
@@ -97,6 +97,19 @@ export class AuthService {
     this.user.destroy();
 
     this.notifyHandlers();
+  }
+
+  public doRegister(username: string, email: string, password: string): Promise<void> {
+    return this.http.post(apiUrls.users(), {
+      username,
+      email,
+      password
+    }).toPromise()
+      .then(response => {
+        var data = response.json();
+
+        return Promise.resolve();
+      });
   }
 }
 
