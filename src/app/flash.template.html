@@ -1,0 +1,7 @@
+<div id="flashes">
+  <div *ngFor="let flash of tempItems" class="alert" [class.alert-info]="flash.isInfo()" [class.alert-danger]="flash.isError()"
+    id="flash{{flash.id}}">
+    {{flash.message}}
+
+  </div>
+</div>

@@ -5,12 +5,7 @@ declare var $: JQueryStatic;
 
 @Component({
   selector: 'app-flash',
-  template: `<div style="float:right"><div *ngFor="let flash of tempItems" class="alert" [class.alert-info]="flash.isInfo()"
-  [class.alert-danger]="flash.isError()"  id="flash{{flash.id}}">
-  {{flash.message}}
-  
-  </div>
-  </div>`
+  templateUrl: './flash.template.html'
 })
 
 export class FlashComponent implements OnInit {
