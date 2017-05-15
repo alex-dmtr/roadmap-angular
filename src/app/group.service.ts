@@ -20,4 +20,14 @@ export class GroupService {
     return this.http.get(apiUrls.groupById(groupID))
       .toPromise().then(response => response.json() as Group);
   }
+
+  createGroup(group: Group): Promise<any> {
+    return this.http.post(apiUrls.groups(), group)
+      .toPromise().then(response => response.json());
+  }
+
+  updateGroup(group: Group): Promise<Group> {
+    return this.http.put(apiUrls.groupById(group.id), group)
+      .toPromise().then(response => response.json() as Group);
+  }
 }

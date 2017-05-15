@@ -1,5 +1,7 @@
 import { OnInit, Component } from '@angular/core';
 import { GroupService } from './group.service';
+import { AuthService } from './auth.service';
+import { FlashService, FlashType } from './flash.service';
 import { Group } from './group';
 
 @Component({
@@ -10,7 +12,10 @@ import { Group } from './group';
 export class GroupsComponent implements OnInit {
   groups: Group[] = [];
 
-  constructor(private groupService: GroupService) {
+  constructor(
+    private groupService: GroupService,
+    private authService: AuthService,
+    private flashService: FlashService) {
 
   }
   ngOnInit(): void {
@@ -21,5 +26,27 @@ export class GroupsComponent implements OnInit {
     return this.groupService.getGroups().then((groups) => {
       this.groups = groups;
     });
+  }
+
+  createGroup($event: any) {
+    $event.preventDefault();
+
+    let group = new Group();
+
+    group.name = $("#groupName").val();
+    group.description = $("#groupDescription").val();
+    group.avatarUrl = $("#groupAvatarUrl").val();
+    group.owner = this.authService.user;
+
+    this.groupService.createGroup(group)
+      .then(response => {
+        this.flashService.push(FlashType.Info, "Group created succesfuly");
+        $("#createGroupModal").modal('hide');
+        return this.getGroups();
+      })
+      .catch(err => {
+        this.flashService.push(FlashType.Error, "Error creating group");
+        console.error(err);
+      })
   }
 }
