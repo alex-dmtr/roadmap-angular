@@ -23,6 +23,7 @@ export class GroupComponent implements OnInit {
   ) { }
 
   public group: Group = new Group();
+  public isAdmin: boolean = false;
 
   private getGroup(): Promise<Group> {
 
@@ -33,6 +34,8 @@ export class GroupComponent implements OnInit {
         return this.groupService.getGroup(id);
       }).subscribe(group => {
         this.group = group;
+        this.isAdmin = (group.owner.id === this.authService.user.id);
+
         resolve(group);
       })
 

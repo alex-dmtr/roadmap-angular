@@ -2,7 +2,7 @@
   <div class="col-xs-6">
     <!--<button class="btn btn-default" style="float:right" id="leave-group">Leave group</button>-->
 
-    <button class="btn btn-default" style="float:right" data-toggle="modal" data-target="#editGroupModal">Edit group</button>
+    <button *ngIf="isAdmin" class="btn btn-default" style="float:right" data-toggle="modal" data-target="#editGroupModal">Edit group</button>
     <h1>{{group.name}} </h1>
     <p>{{group.description}}</p>
     <p>Group owner: <strong>{{group.owner.username}}</strong>
@@ -20,7 +20,7 @@
 
         <li *ngFor="let post of group.posts" class="post" id="post{{post.id}}">
 
-          <a href="javascript:;" class="edit-post"><span class="glyphicon glyphicon-pencil" style="float:right"></span></a>
+          <a *ngIf="post.owner.id===authService.user.id" href="javascript:;" class="edit-post"><span class="glyphicon glyphicon-pencil" style="float:right"></span></a>
 
           <strong>{{post.owner.username}}</strong>
           <div class="post-view">

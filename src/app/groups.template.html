@@ -12,7 +12,7 @@
 
           <img *ngIf="!group.is_member" src="{{group.avatarUrl}}" class="img img-responsive">
 
-          <a *ngIf="group.is_member" href="/groups/{{group.id}}">
+          <a *ngIf="group.is_member" routerLink="{{group.id}}">
             <img src="{{group.avatarUrl}}" class="img img-responsive">
           </a>
 
@@ -26,9 +26,9 @@
 
           <p>{{group.description}}</p>
           <p><em>{{group.num_members}} members</em></p>
-          <!--
-              <a *ngIf="group.is_member" href="/groups/{{group.id}}">>> Go to group</a>
-              <a *ngIf="!group.is_member" class='join-button' data-group="{{group.id}}" href=#>Join group</a>-->
+
+          <a *ngIf="group.is_member" routerLink="{{group.id}}">>> Go to group</a>
+          <a *ngIf="!group.is_member" class='join-button' href=#>Join group</a>
 
           <p>Created by: <strong>{{group.owner.username}}</strong></p>
 
