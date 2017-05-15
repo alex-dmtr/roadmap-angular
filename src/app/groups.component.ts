@@ -28,7 +28,7 @@ export class GroupsComponent implements OnInit {
     });
   }
 
-  createGroup($event: any) {
+  public createGroup($event: any) {
     $event.preventDefault();
 
     let group = new Group();
@@ -40,12 +40,26 @@ export class GroupsComponent implements OnInit {
 
     this.groupService.createGroup(group)
       .then(response => {
-        this.flashService.push(FlashType.Info, "Group created succesfuly");
+        this.flashService.push(FlashType.Info, "Group created succesfully");
         $("#createGroupModal").modal('hide');
         return this.getGroups();
       })
       .catch(err => {
         this.flashService.push(FlashType.Error, "Error creating group");
+        console.error(err);
+      })
+  }
+
+  public joinGroup($event: any, groupID: number) {
+    $event.preventDefault();
+
+    this.groupService.joinGroup(groupID, this.authService.user.id)
+      .then(response => {
+        this.flashService.push(FlashType.Info, "Join succesful");
+        return this.getGroups();
+      })
+      .catch(err => {
+        this.flashService.push(FlashType.Error, "Error joining group");
         console.error(err);
       })
   }

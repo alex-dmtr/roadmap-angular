@@ -28,7 +28,7 @@
           <p><em>{{group.num_members}} members</em></p>
 
           <a *ngIf="group.is_member" routerLink="{{group.id}}">>> Go to group</a>
-          <a *ngIf="!group.is_member" class='join-button' href=#>Join group</a>
+          <a *ngIf="!group.is_member" class='join-button' (click)="joinGroup($event, group.id)">Join group</a>
 
           <p>Created by: <strong>{{group.owner.username}}</strong></p>
 
