@@ -1,1 +1,105 @@
-{{user.username}}
+<div>
+  <h2>{{user.username}}</h2>
+
+  <p>{{user.description}}</p>
+
+  <table class="table" style="max-width:400px">
+    <tr>
+      <td>Age</td>
+      <td>{{user.age}}</td>
+    </tr>
+    <tr>
+      <td>Current project</td>
+      <td>{{user.currentProject}}</td>
+    </tr>
+    <tr>
+      <td>Agency</td>
+      <td>{{user.agency}}</td>
+    </tr>
+  </table>
+
+  <a class='btn btn-primary' id='edit-button' data-toggle="modal" data-target="#editProfileModal">Edit profile</a>
+  <a class='btn btn-default' href=# id='logout-button'>Logout</a>
+</div>
+
+<!-- Modal -->
+<div id="editProfileModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close " data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Edit profile</h4>
+      </div>
+      <form>
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Username" value="{{user.username}}" class="form-control" readonly>
+          </div>
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" id="email" value={{user.email}} class="form-control">
+          </div>
+
+
+          <img src="{{user.avatarUrl}}" style="height:200px" align="right" />
+          <div class="form-group">
+            <label for="avatarUrl">Avatar</label>
+            <input type="url" id="avatarUrl" placeholder="Enter an URL for your avatar" value="{{user.avatarUrl}}" class="form-control"
+              alt="Avatar not found">
+          </div>
+
+
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" placeholder="Tell us something about yourself" rows="2" cols="10" class="form-control">{{user.description}}</textarea>
+          </div>
+          <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" id="age" value={{user.age}} min="18" max="99" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="currentProject">Current Project</label>
+            <input type="text" id="currentProject" placeholder="What project are you working on right now?" value="{{user.currentProject}}"
+              class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="agency">Agency</label>
+            <input type="text" id="agency" placeholder="Agency" value="{{user.agency}}" class="form-control">
+          </div>
+
+
+          <div class="text-danger" id="validation-error">
+
+          </div>
+
+
+
+        </div>
+        <div class="modal-footer">
+          <input type="submit" class="btn btn-success" id='save-button' value='Save changes' (click)="saveUser($event)">
+          <input type="reset" class="btn btn-default" value='Reset changes'>
+          <input type="button" class="btn btn-danger" id='delete-button' value='Delete user' (click)="deleteUser($event)">
+          <button type=" button " class="btn btn-default " data-dismiss="modal ">Close</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<!-- 
+Id, primary key,AI(auto incremented)  - unique 
+username - string,not null, 256(length)
+email - string,not null, 256(length)
+description - string, nullable, 500(length)
+password - string - plain- for the moment, no encryption needed, not null, 256(length)
+avatarUrl - string, nullable, 500(length)
+age - integer,nullable, 
+currentProject that he/she works on - string,nullable, 500(length)
+agency ( Brasov, Iasi, Cluj, Bucharest, Chisinau) - string,nullable, 500(length)
+
+  -->

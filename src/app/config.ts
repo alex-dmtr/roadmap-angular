@@ -38,7 +38,13 @@ export var apiUrls = {
    */
   groupPosts: (groupID: number) => `/group/${groupID}/post`,
 
-  groupRemoveMember: (groupID: number, userID: number) => `/group/${groupID}/remove/${userID}`
+  groupRemoveMember: (groupID: number, userID: number) => `/group/${groupID}/remove/${userID}`,
+
+  /**
+   * /users/:userID
+   * 
+   */
+  user: (userID: number) => `/users/${userID}`
 };
 
 // prepend protocol, address and apiPrefix to all urls

@@ -93,10 +93,12 @@ export class AuthService {
       });
   }
 
-  public doLogout() {
+  public doLogout(): Promise<void> {
     this.user.destroy();
 
     this.notifyHandlers();
+
+    return Promise.resolve();
   }
 
   public doRegister(username: string, email: string, password: string): Promise<void> {
