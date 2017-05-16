@@ -55,7 +55,7 @@ export class GroupsComponent implements OnInit {
 
     this.groupService.joinGroup(groupID, this.authService.user.id)
       .then(response => {
-        this.flashService.push(FlashType.Info, "Join succesful");
+        this.flashService.push(FlashType.Info, `You've joined ${this.groups.find(x => x.id === groupID).name}`);
         return this.getGroups();
       })
       .catch(err => {

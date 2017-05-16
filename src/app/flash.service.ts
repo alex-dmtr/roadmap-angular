@@ -65,6 +65,14 @@ export class FlashService {
     });
   }
 
+  public pushInfo(message: string) {
+    this.push(FlashType.Info, message);
+  }
+
+  public pushError(message: string) {
+    this.push(FlashType.Error, message);
+  }
+
   public remove(flashID: number) {
     this.items = this.items.filter((item: Flash) => {
       if (item.id !== flashID)
