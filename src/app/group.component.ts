@@ -121,4 +121,46 @@ export class GroupComponent implements OnInit {
         console.error(err);
       })
   }
+
+
+  public showEditPost($event: any, postID: number) {
+
+    $(".post .post-edit").hide();
+    $(".post .post-view").show();
+
+    $(`#post${postID} .post-edit`).show();
+    $(`#post${postID} .post-view`).hide();
+  }
+
+  public hideEditPost($event: any) {
+
+    $(".post .post-edit").hide();
+    $(".post .post-view").show();
+  }
+
+  public savePost($event: any, postID: number) {
+    let message = $(`#post${postID} .post-message`).val();
+
+    this.groupService.savePost(this.group.id, postID, message)
+      .then(response => {
+        this.flashService.pushInfo("Post saved");
+        this.getGroup();
+      })
+      .catch(err => {
+        this.flashService.pushError("Error saving post");
+        console.error(err);
+      })
+  }
+
+  public deletePost($event: any, postID: number) {
+    this.groupService.deletePost(this.group.id, postID)
+      .then(response => {
+        this.flashService.pushInfo("Post deleted");
+        this.getGroup();
+      })
+      .catch(err => {
+        this.flashService.pushError("Error deleting post");
+        console.error(err);
+      })
+  }
 }

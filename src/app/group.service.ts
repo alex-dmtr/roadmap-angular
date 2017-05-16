@@ -54,4 +54,18 @@ export class GroupService {
     }).toPromise()
       .then(response => response.json());
   }
+
+  public savePost(groupID: number, postID: number, message: string) {
+    return this.http.put(apiUrls.groupPost(groupID, postID), {
+      message
+    })
+      .toPromise()
+      .then(response => response.json());
+  }
+
+  public deletePost(groupID: number, postID: number) {
+    return this.http.delete(apiUrls.groupPost(groupID, postID))
+      .toPromise()
+
+  }
 }
