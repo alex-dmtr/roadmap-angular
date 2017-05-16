@@ -40,4 +40,18 @@ export class GroupService {
     return this.http.delete(apiUrls.groupById(groupID))
       .toPromise().then(response => response.json());
   }
+
+  public removeFromGroup(groupID: number, userID: number): Promise<any> {
+    return this.http.delete(apiUrls.groupRemoveMember(groupID, userID))
+      .toPromise().then(response => response.json());
+  }
+
+  public addPost(groupID: number, userID: number, message: string) {
+    return this.http.post(apiUrls.groupPosts(groupID), {
+      ownerId: userID,
+      groupId: groupID,
+      message: message
+    }).toPromise()
+      .then(response => response.json());
+  }
 }

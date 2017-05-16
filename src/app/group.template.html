@@ -4,9 +4,11 @@
 
     <button *ngIf="isAdmin" class="btn btn-danger" style="float:right" (click)="deleteGroup($event)">Delete group</button>
     <button *ngIf="isAdmin" class="btn btn-default" style="float:right" data-toggle="modal" data-target="#editGroupModal">Edit group</button>
+    <button *ngIf="!isAdmin" class="btn btn-default" style="float:right" (click)="leaveGroup($event)">Leave group</button>
     <h1>{{group.name}} </h1>
 
     <p>{{group.description}}</p>
+
 
     <p>Group owner: <strong>{{group.owner.username}}</strong>
       <p>Members:</p>
@@ -41,7 +43,7 @@
       </ul>
 
       <textarea class="form-control" rows="2" cols="10" id="post-message" placeholder="Write a post here"></textarea>
-      <button class=" btn btn-primary " id='add-post' style="margin-top:10px">Add post</button>
+      <button class=" btn btn-primary" id='add-post' style="margin-top:10px" (click)="addPost($event)">Add post</button>
   </div>
   <div class="col-xs-6 ">
     <img src='{{group.avatarUrl}} ' class="img img-responsive img-thumbnail ">

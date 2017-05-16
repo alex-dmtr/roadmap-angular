@@ -86,4 +86,39 @@ export class GroupComponent implements OnInit {
         console.error(err);
       })
   }
+
+  public leaveGroup($event: any) {
+    $event.preventDefault();
+
+    let userID = this.authService.user.id;
+    let groupID = this.group.id;
+
+    this.groupService.removeFromGroup(groupID, userID)
+      .then(response => {
+        this.flashService.push(FlashType.Info, `You've left ${this.group.name}`);
+        this.router.navigate(["groups"]);
+      })
+      .catch(err => {
+        this.flashService.push(FlashType.Error, "Can't leave the group");
+        console.error(err);
+      })
+  }
+
+  public addPost($event: any) {
+    $event.preventDefault();
+
+    let message = $("#post-message").val();
+    let userID = this.authService.user.id;
+
+    this.groupService.addPost(this.group.id, userID, message)
+      .then(response => {
+        $("#post-message").val("");
+        this.getGroup();
+        this.flashService.push(FlashType.Info, "Post added");
+      })
+      .catch(err => {
+        this.flashService.push(FlashType.Error, "Can't post message");
+        console.error(err);
+      })
+  }
 }
