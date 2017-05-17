@@ -47,6 +47,7 @@ export class GroupComponent implements OnInit {
       console.error(err);
     });
 
+
   }
 
 
@@ -118,6 +119,20 @@ export class GroupComponent implements OnInit {
       })
       .catch(err => {
         this.flashService.push(FlashType.Error, "Can't post message");
+        console.error(err);
+      })
+  }
+
+  public removeMember($event: any, memberID: number) {
+    $event.preventDefault();
+
+    this.groupService.removeFromGroup(this.group.id, memberID)
+      .then(response => {
+        this.flashService.pushInfo(`${this.group.members.find(x => x.id === memberID).username} removed from ${this.group.name}`);
+        this.getGroup();
+      })
+      .catch(err => {
+        this.flashService.pushError(`Error removing member`);
         console.error(err);
       })
   }

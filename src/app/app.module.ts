@@ -10,6 +10,8 @@ import { AuthHttpService } from './auth.http.service';
 import { AuthGuard } from './auth-guard.service';
 import { FlashService } from './flash.service';
 import { FlashComponent } from './flash.component';
+import { PromptService } from './prompt.service';
+import { PromptComponent } from './prompt.component';
 
 import { NavComponent } from './nav.component';
 // import { LoginComponent } from './login.component';
@@ -18,9 +20,9 @@ import { NavComponent } from './nav.component';
 // import { GroupsComponent } from './groups.component';
 
 @NgModule({
-  providers: [AuthService, AuthHttpService, AuthGuard, FlashService],
+  providers: [AuthService, AuthHttpService, AuthGuard, FlashService, PromptService],
   imports: [BrowserModule, HttpModule, AppRoutingModule],
-  declarations: [AppComponent, NavComponent, FlashComponent, RoutedComponents],
+  declarations: [AppComponent, NavComponent, FlashComponent, RoutedComponents, PromptComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

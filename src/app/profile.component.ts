@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService, LocalUser } from './auth.service';
 import { ProfileService } from './profile.service';
 import { FlashService } from './flash.service';
+import { PromptService, Prompt, PromptType } from './prompt.service';
 import { User } from './user';
 
 @Component({
@@ -17,7 +18,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private profileService: ProfileService,
-    private flashService: FlashService
+    private flashService: FlashService,
+    private promptService: PromptService
   ) {
 
   }
@@ -63,17 +65,21 @@ export class ProfileComponent implements OnInit {
   }
 
   public deleteUser($event: any) {
-    this.profileService.deleteUser(this.user.id)
+    this.promptService.promptConfirm("Are you sure you want to delete your profile?\nThis cannot be undone.")
       .then(response => {
-        return this.authService.doLogout();
+        this.profileService.deleteUser(this.user.id)
+          .then(response => {
+            return this.authService.doLogout();
+          })
+          .then(() => {
+            this.flashService.pushInfo("Profile deleted");
+          })
+          .catch(err => {
+            this.flashService.pushError("Can't delete profile");
+            console.error(err);
+          })
       })
-      .then(() => {
-        this.flashService.pushInfo("Profile deleted");
-      })
-      .catch(err => {
-        this.flashService.pushError("Can't delete profile");
-        console.error(err);
-      })
+
   }
 
 }

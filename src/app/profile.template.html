@@ -19,7 +19,7 @@
   </table>
 
   <a class='btn btn-primary' id='edit-button' data-toggle="modal" data-target="#editProfileModal">Edit profile</a>
-  <a class='btn btn-default' href=# id='logout-button'>Logout</a>
+  <a class='btn btn-default' (click)="authService.doLogout()" id='logout-button'>Logout</a>
 </div>
 
 <!-- Modal -->

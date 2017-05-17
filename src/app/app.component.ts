@@ -11,12 +11,15 @@ import { Observable } from 'rxjs/Observable';
   templateUrl: './app.template.html'
 })
 
-
 export class AppComponent {
   user: LocalUser;
   private loggedIn = false;
 
-  constructor(private authService: AuthService, private router: Router, private flashService: FlashService) {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private flashService: FlashService
+  ) {
     this.user = authService.user;
 
     authService.user$.subscribe(user => {
@@ -26,7 +29,7 @@ export class AppComponent {
       // }
       if (!user.isAuth && this.loggedIn) {
         this.router.navigate(["home"]);
-        this.flashService.push(FlashType.Info, `Logged out succesfully`);
+        this.flashService.push(FlashType.Info, `You've logged out`);
       }
 
       this.loggedIn = user.isAuth;
