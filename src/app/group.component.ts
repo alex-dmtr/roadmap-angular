@@ -3,6 +3,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FlashService, FlashType } from './flash.service';
 import { GroupService } from './group.service'
 import { AuthService } from './auth.service';
+import { PromptService } from './prompt.service';
+
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/toPromise';
 import { Observable } from 'rxjs/Observable';
@@ -19,7 +21,8 @@ export class GroupComponent implements OnInit {
     private groupService: GroupService,
     private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private promptService: PromptService
   ) { }
 
   public group: Group = new Group();
@@ -77,32 +80,52 @@ export class GroupComponent implements OnInit {
   public deleteGroup($event: any) {
     $event.preventDefault();
 
-    this.groupService.deleteGroup(this.group.id)
-      .then(response => {
-        this.flashService.push(FlashType.Info, "Group deleted");
-        this.router.navigate(["groups"]);
+    let doDeleteGroup = () => {
+      this.groupService.deleteGroup(this.group.id)
+        .then(response => {
+          this.flashService.push(FlashType.Info, "Group deleted");
+          this.router.navigate(["groups"]);
+        })
+        .catch(err => {
+          this.flashService.push(FlashType.Error, "Group deletion failed");
+          console.error(err);
+        })
+    }
+    this.promptService.promptConfirm(`Are you sure you wish to delete ${this.group.name}?\nThis cannot be undone.`)
+      .then(ok => {
+        if (ok) {
+          doDeleteGroup();
+        }
       })
-      .catch(err => {
-        this.flashService.push(FlashType.Error, "Group deletion failed");
-        console.error(err);
-      })
+
   }
 
   public leaveGroup($event: any) {
     $event.preventDefault();
 
-    let userID = this.authService.user.id;
-    let groupID = this.group.id;
+    let doLeaveGroup = () => {
+      let userID = this.authService.user.id;
+      let groupID = this.group.id;
 
-    this.groupService.removeFromGroup(groupID, userID)
-      .then(response => {
-        this.flashService.push(FlashType.Info, `You've left ${this.group.name}`);
-        this.router.navigate(["groups"]);
+      this.groupService.removeFromGroup(groupID, userID)
+        .then(response => {
+          this.flashService.push(FlashType.Info, `You've left ${this.group.name}`);
+          this.router.navigate(["groups"]);
+        })
+        .catch(err => {
+          this.flashService.push(FlashType.Error, "Can't leave the group");
+          console.error(err);
+        })
+    }
+
+    this.promptService.promptConfirm(`Are you sure wish you to leave ${this.group.name}?`)
+      .then(ok => {
+        if (ok) {
+          doLeaveGroup();
+        }
       })
-      .catch(err => {
-        this.flashService.push(FlashType.Error, "Can't leave the group");
-        console.error(err);
-      })
+
+
   }
 
   public addPost($event: any) {
@@ -126,14 +149,23 @@ export class GroupComponent implements OnInit {
   public removeMember($event: any, memberID: number) {
     $event.preventDefault();
 
-    this.groupService.removeFromGroup(this.group.id, memberID)
-      .then(response => {
-        this.flashService.pushInfo(`${this.group.members.find(x => x.id === memberID).username} removed from ${this.group.name}`);
-        this.getGroup();
-      })
-      .catch(err => {
-        this.flashService.pushError(`Error removing member`);
-        console.error(err);
+    let member = this.group.members.find(x => x.id === memberID);
+    let doRemoveMember = () => {
+      this.groupService.removeFromGroup(this.group.id, memberID)
+        .then(response => {
+          this.flashService.pushInfo(`${member.username} removed from ${this.group.name}`);
+          this.getGroup();
+        })
+        .catch(err => {
+          this.flashService.pushError(`Error removing member`);
+          console.error(err);
+        })
+    }
+
+    this.promptService.promptConfirm(`Are you sure you wish to remove ${member.username} from ${this.group.name}?`)
+      .then(ok => {
+        if (ok)
+          doRemoveMember();
       })
   }
 
