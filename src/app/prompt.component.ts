@@ -6,14 +6,38 @@ import { PromptService, Prompt, PromptPromise } from './prompt.service';
   templateUrl: './prompt.template.html'
 })
 export class PromptComponent {
-  constructor(
-    private promptService: PromptService
-  ) {
+  constructor(private promptService: PromptService) {
     this.promptService.prompt$.subscribe(promptPromise => {
-      let data = prompt(promptPromise.prompt.message);
-      if (data == null)
-        return promptPromise.reject();
-      promptPromise.resolve(data);
-    })
+      this.newPrompt(promptPromise);
+    });
+  }
+
+  public prompt: Prompt;
+  public promptPromise: PromptPromise;
+
+  private newPrompt(promptPromise: PromptPromise) {
+    this.promptPromise = promptPromise;
+    this.prompt = promptPromise.prompt;
+    ($("#promptModal") as any).modal('show');
+  }
+
+  private hideModal() {
+    ($("#promptModal") as any).modal('hide');
+
+  }
+
+  /*
+    REGION: Confirm
+  */
+  public yes($event: any) {
+    this.promptPromise.resolve(true);
+
+    this.hideModal();
+  }
+
+  public no($event: any) {
+    this.promptPromise.resolve(false);
+
+    this.hideModal();
   }
 }

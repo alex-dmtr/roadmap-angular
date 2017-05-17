@@ -1,0 +1,42 @@
+<!-- Modal -->
+<div id="promptModal" class="modal fade" role="dialog">
+  <div *ngIf="prompt" class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <!--<div class="modal-header">
+        <button type="button" class="close " data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Edit group</h4>
+      </div>-->
+      <form>
+        <div class="modal-body">
+          <!--
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" id="groupName" placeholder="Group name" class="form-control" required value="{{group.name}}" />
+          </div>
+          <div class="form-group">
+            <label>Description</label><textarea id="groupDescription" placeholder="Group description" class="form-control"
+              rows="2 " cols="10 " required>{{group.description}}</textarea>
+          </div>
+          <div class="form-group">
+            <label>Avatar URL</label><input type="text" id="groupAvatarUrl" placeholder="Group avatar URL" class="form-control"
+              required value="{{group.avatarUrl}}" />
+          </div>
+          -->
+          <p>{{prompt.message}}</p>
+        </div>
+        <div class="modal-footer">
+          <div *ngIf="prompt.isConfirm()">
+            <button type="button" class="btn btn-success" (click)="yes($event)">Yes</button>
+            <button type="button" class="btn btn-default" (click)="no($event)">No</button>
+          </div>
+          <!--<input type="submit" class="btn btn-success" id='groupSubmit' (click)="saveGroup($event)" />-->
+          <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</div>

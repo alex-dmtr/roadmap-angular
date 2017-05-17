@@ -66,18 +66,20 @@ export class ProfileComponent implements OnInit {
 
   public deleteUser($event: any) {
     this.promptService.promptConfirm("Are you sure you want to delete your profile?\nThis cannot be undone.")
-      .then(response => {
-        this.profileService.deleteUser(this.user.id)
-          .then(response => {
-            return this.authService.doLogout();
-          })
-          .then(() => {
-            this.flashService.pushInfo("Profile deleted");
-          })
-          .catch(err => {
-            this.flashService.pushError("Can't delete profile");
-            console.error(err);
-          })
+      .then(ok => {
+        if (ok) {
+          this.profileService.deleteUser(this.user.id)
+            .then(response => {
+              return this.authService.doLogout();
+            })
+            .then(() => {
+              this.flashService.pushInfo("Profile deleted");
+            })
+            .catch(err => {
+              this.flashService.pushError("Can't delete profile");
+              console.error(err);
+            })
+        }
       })
 
   }

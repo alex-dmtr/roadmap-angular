@@ -10,6 +10,10 @@ export class Prompt {
   constructor(public type: PromptType, public message: string) {
 
   }
+
+  public isConfirm(): boolean {
+    return this.type === PromptType.Confirm;
+  }
 }
 
 export class PromptPromise {
