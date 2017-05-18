@@ -1,6 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { apiUrls } from './config';
 import 'rxjs/add/operator/toPromise';
 
@@ -45,22 +46,14 @@ export class AuthService {
    * LocalUser observable stream. Will update on login/logout.
    * 
    */
-  user$: Observable<LocalUser>;
-  private handlers: any[] = [];
+  user$: Subject<LocalUser> = new Subject<LocalUser>();
 
-  private notifyHandlers() {
-    this.handlers.forEach((subscriber: any) => {
-      subscriber.next(this.user);
-    });
-  }
+
   constructor(private http: Http) {
 
     this.user.fetch();
 
-    this.user$ = new Observable<LocalUser>((subscriber: any) => {
-      this.handlers.push(subscriber);
-      subscriber.next(this.user);
-    });
+    this.user$.next(this.user);
 
   }
 
@@ -87,7 +80,7 @@ export class AuthService {
 
         this.user.save();
 
-        this.notifyHandlers();
+        this.user$.next(this.user);
 
         return Promise.resolve(this.user);
       });
@@ -109,7 +102,7 @@ export class AuthService {
   public doLogout(): Promise<void> {
     this.user.destroy();
 
-    this.notifyHandlers();
+    this.user$.next(this.user);
 
     return Promise.resolve();
   }
