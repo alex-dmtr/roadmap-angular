@@ -22,6 +22,8 @@
 
       </ul>
 
+      <button *ngIf="isAdmin" class="btn btn-default" data-toggle="modal" data-target="#addMemberModal">Add users</button>
+
       <h3>Posts</h3>
       <ul class="posts">
 
@@ -88,5 +90,47 @@
 
   </div>
 </div>
+
+<!-- Modal -->
+<div id="addMemberModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close " data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add member</h4>
+      </div>
+      <form>
+        <div class="modal-body">
+          <input type="search" class="form-control" placeholder="Search members" id="searchMembers" #searchMembers (keyup)="search(searchMembers.value)">
+
+          <table style="margin-top:10px">
+            <tbody>
+
+              <tr *ngFor="let member of potentialMembers | async" class="search-result">
+                <td style="width:50%">
+                  <strong>{{member.username}}</strong>
+
+                </td>
+                <td style="width:50%">
+                  <span *ngIf="isInGroup(member)">Is member</span>
+                  <button *ngIf="!isInGroup(member)" class="btn btn-success" (click)="$event.preventDefault(); 
+                  addMember(member, $event);">Add to group</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Done</button>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</div>
+
 
 <a routerLink="/groups">>> Back</a>

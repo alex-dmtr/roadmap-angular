@@ -93,6 +93,19 @@ export class AuthService {
       });
   }
 
+  public checkPassword(password: string): Promise<boolean> {
+    if (!this.isAuthenticated())
+      return Promise.resolve(false);
+    return this.doLogin(this.user.username, password)
+      .then(user => {
+        return Promise.resolve(true);
+      })
+      .catch(err => {
+        return Promise.resolve(false);
+      });
+    // return this.http.post(apiUrls.login(), { })
+  }
+
   public doLogout(): Promise<void> {
     this.user.destroy();
 

@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Group } from './group';
+import { User } from './user';
 import { Headers, Http } from '@angular/http';
 import { AuthHttpService } from './auth.http.service';
 import { apiUrls } from './config';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
@@ -66,6 +69,17 @@ export class GroupService {
   public deletePost(groupID: number, postID: number) {
     return this.http.delete(apiUrls.groupPost(groupID, postID))
       .toPromise()
+
+  }
+
+  public searchUsers({term}: { term: string }): Observable<User[]> {
+    return this.http
+      .get(apiUrls.usersSearch(term))
+      .map(response => {
+        console.log(response.json());
+
+        return response.json() as User[]
+      });
 
   }
 }

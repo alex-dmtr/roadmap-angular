@@ -6,9 +6,17 @@ import { AuthService } from './auth.service';
 import { PromptService } from './prompt.service';
 import { User } from './user';
 
+// Observable class extensions
+import 'rxjs/add/observable/of';
+
+// Observable operators
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { Group } from './group';
 
 @Component({
@@ -28,6 +36,8 @@ export class GroupComponent implements OnInit {
 
   public group: Group = new Group();
   public isAdmin: boolean = false;
+  public potentialMembers: Observable<User[]>;
+  private searchTerms = new Subject<string>();
 
   private getGroup(): Promise<Group> {
 
@@ -39,22 +49,54 @@ export class GroupComponent implements OnInit {
       }).subscribe(group => {
         this.group = group;
         this.isAdmin = (group.owner.id === this.authService.user.id);
-
         resolve(group);
       })
 
     })
 
   }
+
+  /*
+  https://angular.io/docs/ts/latest/tutorial/toh-pt6.html
+  */
   ngOnInit() {
     this.getGroup().catch(err => {
       console.error(err);
     });
 
-
+    let emptyList = Observable.of<User[]>([]);
+    this.potentialMembers = this.searchTerms
+      .debounceTime(300)
+      // .distinctUntilChanged()
+      .switchMap(term => term ? this.groupService.searchUsers({ term }) : emptyList)
+      .catch((err: any, caught: any) => {
+        console.error(err);
+        return emptyList;
+      })
   }
 
+  public isInGroup(member: User): boolean {
+    return this.group.members.find(x => x.id === member.id) != null;
+  }
 
+  public addMember(member: User, $event: any): Promise<any> {
+    console.log($event);
+    return this.groupService
+      .joinGroup(this.group.id, member.id)
+      .then(response => {
+        this.flashService.pushInfo(`${member.username} added`);
+        this.getGroup();
+        this.search($("#searchMembers").val() as string);
+      })
+      .catch(err => {
+        console.error(err);
+        this.flashService.pushError(`Error adding ${member.username}`);
+      })
+  }
+  public search(term: string): void {
+    // console.log(term);
+    this.searchTerms.next(term);
+  }
   public saveGroup($event: any) {
     $event.preventDefault();
 

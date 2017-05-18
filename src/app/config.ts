@@ -44,7 +44,12 @@ export var apiUrls = {
    * /users/:userID
    * 
    */
-  user: (userID: number) => `/users/${userID}`
+  user: (userID: number) => `/users/${userID}`,
+
+  /**
+   * Search users (GET)
+   */
+  usersSearch: (usernameQuery: string = "") => `/users?username=${usernameQuery}`
 };
 
 // prepend protocol, address and apiPrefix to all urls
