@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-
+import { Subject } from 'rxjs/Subject';
 
 export enum FlashType {
   Info,
@@ -43,16 +43,15 @@ class FlashFactory {
 export class FlashService {
 
   private flashFactory = new FlashFactory();
-  private handlers: any[] = [];
 
   public items: Array<Flash> = [];
-  public newItem$: Observable<Flash>;
+  public newItem$: Subject<Flash> = new Subject<Flash>();
 
   constructor() {
 
-    this.newItem$ = new Observable<Flash>((subscriber: any) => {
-      this.handlers.push(subscriber);
-    })
+    // this.newItem$ = new Observable<Flash>((subscriber: any) => {
+    //   this.handlers.push(subscriber);
+    // })
   }
 
   public push(type: FlashType, message: string) {
@@ -60,9 +59,7 @@ export class FlashService {
 
     this.items.push(newFlash);
 
-    this.handlers.forEach((subscriber: any) => {
-      subscriber.next(newFlash);
-    });
+    this.newItem$.next(newFlash);
   }
 
   public pushInfo(message: string) {
