@@ -38,66 +38,6 @@ export class ProfileComponent implements OnInit {
     this.getUser();
   }
 
-  public saveUser($event: any) {
-    $event.preventDefault();
 
-    this.promptService.promptPassword()
-      .then(ok => {
-        if (ok) {
-          let user: User = {
-            id: this.user.id,
-            username: this.user.username,
-            avatarUrl: $("#avatarUrl").val(),
-            email: $("#email").val(),
-            description: $("#description").val(),
-            age: $("#age").val(),
-            currentProject: $("#currentProject").val(),
-            agency: $("#agency").val()
-          };
-
-          this.profileService.saveUser(user)
-            .then(response => {
-              this.flashService.pushInfo("Profile saved");
-              this.getUser();
-              // ($("#editProfileModal") as any).modal('hide');
-            })
-            .catch(err => {
-              console.error(err);
-              this.flashService.pushError("Error saving profile");
-            })
-        }
-      })
-
-
-  }
-
-  public deleteUser($event: any) {
-    this.promptService.promptConfirm("Are you sure you want to delete your profile?\nThis cannot be undone.")
-      .then(ok => {
-        if (!ok) return Promise.reject(ok);
-        return Promise.resolve(true);
-      })
-      .then(() => {
-        return this.promptService.promptPassword();
-      })
-      .then(ok => {
-        if (!ok) return Promise.reject(ok);
-        return Promise.resolve(true);
-      })
-      .then(() => {
-        this.profileService.deleteUser(this.user.id)
-          .then(response => {
-            return this.authService.doLogout();
-          })
-          .then(() => {
-            this.flashService.pushInfo("Profile deleted");
-          })
-          .catch(err => {
-            this.flashService.pushError("Can't delete profile");
-            console.error(err);
-          })
-      })
-
-  }
 
 }

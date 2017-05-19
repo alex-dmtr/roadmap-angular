@@ -1,0 +1,49 @@
+<form>
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" id="username" placeholder="Username" value="{{user.username}}" class="form-control" readonly>
+  </div>
+  <div class="form-group">
+    <label for="email">Email address</label>
+    <input type="email" id="email" value={{user.email}} class="form-control">
+  </div>
+
+
+  <img src="{{user.avatarUrl}}" style="height:200px" align="right" />
+  <div class="form-group">
+    <label for="avatarUrl">Avatar</label>
+    <input type="url" id="avatarUrl" placeholder="Enter an URL for your avatar" value="{{user.avatarUrl}}" class="form-control"
+      alt="Avatar not found">
+  </div>
+
+
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea id="description" placeholder="Tell us something about yourself" rows="2" cols="10" class="form-control">{{user.description}}</textarea>
+  </div>
+  <div class="form-group">
+    <label for="age">Age</label>
+    <input type="number" id="age" value={{user.age}} min="18" max="99" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="currentProject">Current Project</label>
+    <input type="text" id="currentProject" placeholder="What project are you working on right now?" value="{{user.currentProject}}"
+      class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="agency">Agency</label>
+    <input type="text" id="agency" placeholder="Agency" value="{{user.agency}}" class="form-control">
+  </div>
+
+
+  <div class="text-danger" id="validation-error">
+
+  </div>
+
+
+
+  <input type="submit" class="btn btn-success" id='save-button' value='Save changes' (click)="saveUser($event)">
+  <input type="reset" class="btn btn-default" value='Reset changes'>
+  <input type="button" class="btn btn-danger" id='delete-button' value='Delete user' (click)="deleteUser($event)">
+  <a routerLink="/profile" class="btn btn-default ">Close</a>
+</form>

@@ -26,7 +26,7 @@ export class PromptComponent {
     setTimeout(() => {
       ($("#promptModal") as any).modal('show');
 
-    }, 500);
+    }, 100);
   }
 
 

@@ -7,6 +7,7 @@ import { GroupsComponent } from './groups.component';
 import { GroupComponent } from './group.component';
 import { NavComponent } from './nav.component';
 import { ProfileComponent } from './profile.component';
+import { ProfileEditComponent } from './profile.edit.component';
 import { AuthGuard } from './auth-guard.service';
 
 const routes: Routes = [
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'groups', component: GroupsComponent, canActivate: [AuthGuard] },
   { path: 'groups/:id', component: GroupComponent, canActivate: [AuthGuard] },
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'profile/edit', component: ProfileEditComponent, canActivate: [AuthGuard] }
   // { path: 'detail/:id', component: HeroDetailComponent },
   // { path: 'heroes',     component: HeroesComponent }
 ];
@@ -26,4 +28,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-export const RoutedComponents = [LoginComponent, RegisterComponent, HomeComponent, GroupsComponent, GroupComponent, ProfileComponent];
+export const RoutedComponents = [LoginComponent, RegisterComponent, HomeComponent, GroupsComponent, GroupComponent, ProfileComponent, ProfileEditComponent];

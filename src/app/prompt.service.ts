@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 export enum PromptType {
   Confirm,
@@ -33,29 +34,24 @@ export class PromptPromise {
 @Injectable()
 export class PromptService {
 
-  private handler: any;
-  public prompt$: Observable<PromptPromise>;
-  private currentPromise: Promise<any>;
+  public prompt$: Subject<PromptPromise> = new Subject<PromptPromise>();
   private promiseQueue: PromptPromise[] = [];
 
   constructor() {
-    this.prompt$ = new Observable<PromptPromise>((subscriber: any) => {
-      if (this.handler != null)
-        throw new Error("prompt$ can only have one subscriber");
-      this.handler = subscriber;
-    })
+    // this.prompt$ = new Observable<PromptPromise>((subscriber: any) => {
+    //   if (this.handler != null)
+    //     throw new Error("prompt$ can only have one subscriber");
+    //   this.handler = subscriber;
+    // })
   }
 
   private nextInQueue() {
 
     if (this.promiseQueue.length > 0) {
-      this.handler.next(this.promiseQueue[0]);
+      this.prompt$.next(this.promiseQueue[0]);
     }
   }
   private prompt(prompt: Prompt): Promise<any> {
-    if (this.handler == null)
-      throw new Error("prompt$ has no subscriber");
-
     let promise = new Promise((resolve, reject) => {
 
       let promptPromise = new PromptPromise();
@@ -72,7 +68,7 @@ export class PromptService {
 
       this.promiseQueue.push(promptPromise);
       if (this.promiseQueue.length === 1) {
-        this.handler.next(this.promiseQueue[0]);
+        this.prompt$.next(this.promiseQueue[0]);
       }
       // this.handler.next(promptPromise);
     })
